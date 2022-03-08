@@ -46,7 +46,7 @@ public class ConsoleUI {
 
         printPlayerStats();
         printField();
-
+        //game state check
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");
         } else {

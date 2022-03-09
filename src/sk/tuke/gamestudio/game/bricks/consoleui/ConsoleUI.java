@@ -19,7 +19,7 @@ public class ConsoleUI {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_GREEN = "\u001B[32m";
 
-    private Field field;
+    private final Field field;
     private Player player;
 
     private final Scanner scanner = new Scanner(System.in);

@@ -23,7 +23,7 @@ public class Field {
         generate();
     }
 
-    private void generate() {
+    public void generate() {
         fill();
         fillWithColors();
     }
@@ -55,6 +55,16 @@ public class Field {
                 }
             }
         }
+    }
+
+    public void resetField() {
+        for (int row = 0; row < rowCount; row++) {
+            for (int column = 0; column < columnCount; column++) {
+                Tile tile = getTile(row, column);
+                tile.setColor(NONE);
+            }
+        }
+        setRemovedTilesCount(0);
     }
 
     public  int removeTiles(int row, int column){
@@ -90,7 +100,7 @@ public class Field {
                         playerLives --;
                         player.setLives(playerLives);
                     }
-                    player.setScore((removedTilesCount*10)+50);
+                    player.setScore((removedTilesCount*130)); // urob nejake rozne hodnoty
                 }
     }
 
@@ -110,7 +120,7 @@ public class Field {
         return state;
     }
 
-     public void setState(GameState state) {
+    public void setState(GameState state) {
         this.state = state;
     }
 
@@ -120,5 +130,9 @@ public class Field {
 
     public int getRemovedTilesCount() {
         return removedTilesCount;
+    }
+
+    public void setRemovedTilesCount(int removedTilesCount) {
+        this.removedTilesCount = removedTilesCount;
     }
 }

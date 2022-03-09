@@ -19,7 +19,7 @@ public class ConsoleUI {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_GREEN = "\u001B[32m";
 
-    private final Field field;
+    private Field field;
     private Player player;
 
     private final Scanner scanner = new Scanner(System.in);
@@ -31,13 +31,25 @@ public class ConsoleUI {
     public void play() {
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
-        player = new Player(playerName,3, 0);
+        player = new Player(playerName,25, 0);
         do {
             printPlayerStats();
             printField();
             processInput();
+
+            //Repeat new Field
             if(field.isSolved()){
-                field.setState(GameState.WON);
+
+                    //pridať možnosť hračovy ci chce pokračovať dalej
+                System.out.print("Do you wanna play again Y/N: ");
+                String line = scanner.nextLine().toUpperCase();
+                if ("N".equals(line)) {
+                    field.setState(GameState.WON);
+                }
+
+                    field.resetField();
+                    field.generate();
+
             }
             if(player.getLives()==0){
                 field.setState(GameState.FAILED);

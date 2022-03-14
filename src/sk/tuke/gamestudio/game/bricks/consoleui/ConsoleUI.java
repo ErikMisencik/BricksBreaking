@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class ConsoleUI {
 
-    private static final Pattern COMMAND_PATTERN = Pattern.compile("([0-8])([0-8])");
+    private static final Pattern COMMAND_PATTERN = Pattern.compile("([0-4])([0-8])");
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
@@ -31,9 +31,11 @@ public class ConsoleUI {
     public void play() {
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
-        player = new Player(playerName,25, 0);
+        player = new Player(playerName,5, 0);
         do {
             printPlayerStats();
+            System.out.print("Removed Tiles: ");
+            System.out.println(field.getRemovedTilesCount());
             printField();
             processInput();
 
@@ -51,13 +53,17 @@ public class ConsoleUI {
                     field.generate();
 
             }
-            if(player.getLives()==0){
-                field.setState(GameState.FAILED);
-            }
+                if(player.getLives()==0){
+                    field.setState(GameState.FAILED);
+                }
+            field.fieldCorrection();    // pridany check skontrolovat funkcionalitu
+            field.checkColumns();       // uprava stlpcov prazdnych
+            field.fieldCorrection();    // po uprave stlpcov ešte jedna uprava poľa
+
         } while (field.getState() == GameState.PLAYING);
 
         printPlayerStats();
-        printField();
+        //printField();  neiveim ci treba
         //game state check
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");
@@ -73,8 +79,7 @@ public class ConsoleUI {
         System.out.println(player.getLives());
         System.out.print("Player Score:  ");
         System.out.println(player.getScore());
-        System.out.print("Removed Tiles: ");
-        System.out.println(field.getRemovedTilesCount());
+
     }
 
     private void printField() {

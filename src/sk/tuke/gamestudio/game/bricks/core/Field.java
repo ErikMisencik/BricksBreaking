@@ -104,9 +104,76 @@ public class Field {
                 }
     }
 
+    public void fieldCorrection() {
+        int i = 10;
+        while (i != 0) {
+            for (int column = 0; column < columnCount; column++) {
+                for (int row = 0; row < rowCount - 1; row++) {
+                    if (getTile(row + 1, column).getColor() == NONE && getTile(row, column).getColor() != NONE) {
+                        color = getTile(row, column).getColor();
+                        getTile(row + 1, column).setColor(color);
+                        getTile(row, column).setColor(NONE);
+                    }
+                }
+            }
+            i--;
+        }
+    }
+
+    private void columnsCorrection(int row, int column){
+
+        if(column < (columnCount/2)) {
+            //zarovnavanie podla lavej strany
+            for (int r = row; r >= 0; r--) {                     //r = 4
+                for (int c = column; c > 0; c--) {              //c = 3
+                    if (getTile(r, c).getColor() == NONE && getTile(r, c - 1).getColor() != NONE) {
+                        color = getTile(r, c - 1).getColor();
+                        getTile(r, c).setColor(color);
+                        getTile(r, c - 1).setColor(NONE);
+                    }
+                }
+            }
+        }
+        else {
+            //zarovnavanie podla pravej strany
+            for (int r = row; r >= 0; r--) {
+                for (int c = column; c < columnCount-1; c++) {
+                    if (getTile(r, c).getColor() == NONE && getTile(r, c + 1).getColor() != NONE) {
+                        color = getTile(r, c + 1).getColor();
+                        getTile(r, c).setColor(color);
+                        getTile(r, c + 1).setColor(NONE);
+                    }
+                }
+            }
+        }
+    }
+
+    public void checkColumns(){
+        int x = 10;
+        while (x != 0) {
+            for (int column = 0; column < columnCount; column++) {
+                int i = 0;
+                for (int row = 0; row < rowCount; row++) {
+                    if (getTile(row, column).getColor() == NONE) {
+                        i++;
+                    }
+                    if (i == 5) {
+                        columnsCorrection(row, column);
+                    }
+                }
+            }
+            x--;
+        }
+
+    }
+
     public boolean isSolved() {
         return rowCount * columnCount == removedTilesCount;
     }
+
+
+    //GETTERS AND SETTERS
+
 
     public int getColumnCount() {
         return columnCount;

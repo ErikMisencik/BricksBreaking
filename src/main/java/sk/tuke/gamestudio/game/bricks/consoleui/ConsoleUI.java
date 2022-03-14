@@ -4,7 +4,11 @@ import sk.tuke.gamestudio.game.bricks.core.Field;
 import sk.tuke.gamestudio.game.bricks.core.GameState;
 import sk.tuke.gamestudio.game.bricks.core.Player;
 import sk.tuke.gamestudio.game.bricks.core.Tile;
+import sk.tuke.gamestudio.game.bricks.entity.Score;
+import sk.tuke.gamestudio.game.bricks.service.ScoreService;
+import sk.tuke.gamestudio.game.bricks.service.ScoreServiceJDBC;
 
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,15 +27,19 @@ public class ConsoleUI {
     private Player player;
 
     private final Scanner scanner = new Scanner(System.in);
+    private final ScoreService scoreService = new ScoreServiceJDBC();
 
     public ConsoleUI(Field field) {
         this.field = field;
     }
 
     public void play() {
+        //sprav, že do you wanna reset ScoreBoard ? pomocou  service.reset();
+        //bud sprav reset na zaciatku alebo sa opytaj na konci hry
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
         player = new Player(playerName,5, 0);
+        //printTopScores();
         do {
             printPlayerStats();
             System.out.print("Removed Tiles: ");
@@ -63,8 +71,9 @@ public class ConsoleUI {
         } while (field.getState() == GameState.PLAYING);
 
         printPlayerStats();
-        //printField();  neiveim ci treba
-        //game state check
+
+        scoreService.addScore(new Score(playerName,"BricksBreaking", player.getScore(), new Date()));
+
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");
         } else {
@@ -121,4 +130,11 @@ public class ConsoleUI {
                 System.err.println("Wrong input " + line);
             }
         }
+//    private void printTopScores(){
+//        var scores = scoreService.getTopScores("BricksBreaking");
+//        for(int i = 0; i< scores.size(); i++){
+//            var score = scores.get(i);
+//            System.out.printf("%d. %s %d\n", i, score.getPlayer(), score.getPoints());
+//        }
+//    }
 }

@@ -12,6 +12,13 @@ public class Score {
 
     private Date playedAt;  //cislo, okamih v historii
 
+    public Score(String player, String game, int points, Date playedAt) {
+        this.player = player;
+        this.game = game;
+        this.points = points;
+        this.playedAt = playedAt;
+    }
+
     public String getPlayer() {
         return player;
     }

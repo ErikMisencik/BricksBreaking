@@ -34,12 +34,11 @@ public class ConsoleUI {
     }
 
     public void play() {
-        //sprav, že do you wanna reset ScoreBoard ? pomocou  service.reset();
-        //bud sprav reset na zaciatku alebo sa opytaj na konci hry
+            //sprav, že do you wanna reset ScoreBoard ? pomocou  service.reset();
+            //bud sprav reset na zaciatku alebo sa opytaj na konci hry
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
         player = new Player(playerName,5, 0);
-        //printTopScores();
         do {
             printPlayerStats();
             System.out.print("Removed Tiles: ");
@@ -72,7 +71,9 @@ public class ConsoleUI {
 
         printPlayerStats();
 
+        //pridanie do tabulky hracove udaje
         scoreService.addScore(new Score(playerName,"BricksBreaking", player.getScore(), new Date()));
+        //printTopScores();
 
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");

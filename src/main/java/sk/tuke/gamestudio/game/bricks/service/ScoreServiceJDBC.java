@@ -16,7 +16,7 @@ public class ScoreServiceJDBC implements ScoreService{
     public static final String JDBC_PASSWORD = "erikmisencik";
     public static final String INSERT_STATEMENT = "INSERT INTO score (player, game, points, played_at) VALUES (?, ?, ?, ?)";
     public static final String DELETE_STATEMENT = "DELETE FROM score";
-    public static final String SELECT_STATEMENT = "SELECT player, game, points, played_at FROM score WHERE game = ? ORDER BY points DESC LIMIT 10";
+    public static final String SELECT_STATEMENT = "SELECT player, game, points, played_at FROM score WHERE game = ? ORDER BY points DESC LIMIT 5";
 
     @Override
     public void addScore(Score score) {

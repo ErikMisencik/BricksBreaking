@@ -4,9 +4,10 @@ import sk.tuke.gamestudio.game.bricks.core.Field;
 import sk.tuke.gamestudio.game.bricks.core.GameState;
 import sk.tuke.gamestudio.game.bricks.core.Player;
 import sk.tuke.gamestudio.game.bricks.core.Tile;
+import sk.tuke.gamestudio.game.bricks.entity.Comment;
+import sk.tuke.gamestudio.game.bricks.entity.Rating;
 import sk.tuke.gamestudio.game.bricks.entity.Score;
-import sk.tuke.gamestudio.game.bricks.service.ScoreService;
-import sk.tuke.gamestudio.game.bricks.service.ScoreServiceJDBC;
+import sk.tuke.gamestudio.game.bricks.service.*;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
 public class ConsoleUI {
 
     private static final Pattern COMMAND_PATTERN = Pattern.compile("([0-4])([0-8])");
+    private static final Pattern RATING_PATTERN = Pattern.compile("([1-5])");
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_YELLOW = "\u001B[33m";
@@ -28,6 +30,9 @@ public class ConsoleUI {
 
     private final Scanner scanner = new Scanner(System.in);
     private final ScoreService scoreService = new ScoreServiceJDBC();
+    private final RatingService ratingService = new RatingServiceJDBC();
+    private final CommentService commentService = new CommentServiceJDBC();
+
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -52,6 +57,7 @@ public class ConsoleUI {
                     //pridať možnosť hračovy ci chce pokračovať dalej
                 System.out.print("Do you wanna play again Y/N: ");
                 String line = scanner.nextLine().toUpperCase();
+                System.out.print("\n");
                 if ("N".equals(line)) {
                     field.setState(GameState.WON);
                 }
@@ -71,15 +77,29 @@ public class ConsoleUI {
 
         printPlayerStats();
 
-        //pridanie do tabulky hracove udaje
-        scoreService.addScore(new Score(playerName,"BricksBreaking", player.getScore(), new Date()));
-        //printTopScores();
-
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");
         } else {
             System.out.println("\nGame Won!");
         }
+
+
+        System.out.print("\nDo you wanna Rate and Comment The Game Y/N: ");
+        String line = scanner.nextLine().toUpperCase();
+        System.out.print("\n");
+        if ("Y".equals(line)) {
+            ratingGame();
+            commentGame();
+        }
+        else if ("N".equals(line)){
+            System.out.print("WHAT A SHAME \n");
+        }
+        else {
+            System.out.print("\nMISSED RIGHT KEY Hahhhaa \n");
+        }
+
+        scoreService.addScore(new Score(player.getName(),"BricksBreaking", player.getScore(), new Date()));
+        printTopScores();
     }
 
     private void printPlayerStats(){
@@ -131,11 +151,33 @@ public class ConsoleUI {
                 System.err.println("Wrong input " + line);
             }
         }
-//    private void printTopScores(){
-//        var scores = scoreService.getTopScores("BricksBreaking");
-//        for(int i = 0; i< scores.size(); i++){
-//            var score = scores.get(i);
-//            System.out.printf("%d. %s %d\n", i, score.getPlayer(), score.getPoints());
-//        }
-//    }
+
+    private void printTopScores(){
+        System.out.print("\nHall Of Fame 5: \n");
+        var scores = scoreService.getTopScores("BricksBreaking");
+        for(int i = 0; i< scores.size(); i++){
+            var score = scores.get(i);
+            System.out.printf("%d. %s %d\n", i+1, score.getPlayer(), score.getPoints());
+        }
+    }
+
+    private void ratingGame() {
+        System.out.print("Enter Rating Of The Game (1-5): ");
+        String rating = scanner.nextLine();
+        Matcher rate = RATING_PATTERN.matcher(rating);
+        if (rate.matches()) {
+            int number = Integer.parseInt(rate.group(1));
+            ratingService.addRating(new Rating(player.getName(), "BricksBreaking", number, new Date()));
+        } else {
+            System.err.print("Wrong input - Try Again: ");
+            ratingGame();
+        }
+    }
+
+    private void commentGame(){
+        System.out.print("Write Comment About The Game: ");
+        String comment = scanner.nextLine();
+        commentService.addComment(new Comment(player.getName(), "BricksBreaking", comment, new Date()));
+    }
+
 }

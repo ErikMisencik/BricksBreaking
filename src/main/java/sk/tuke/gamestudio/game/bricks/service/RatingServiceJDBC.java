@@ -19,7 +19,7 @@ public class RatingServiceJDBC implements RatingService {
 
 
     @Override
-    public void addRating(Rating rating) {
+    public void setRating(Rating rating) {
         try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
             var statement = connection.prepareStatement(INSERT_STATEMENT)
         ){
@@ -45,6 +45,46 @@ public class RatingServiceJDBC implements RatingService {
                     ratings.add(new Rating(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
                 }
                 return ratings;
+            }
+        }
+        catch (SQLException e) {
+            throw new GameStudioException(e);
+        }
+    }
+
+    @Override
+    public int getAverageRating(String game) {
+
+        try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            var statement = connection.prepareStatement(SELECT_STATEMENT)
+        ){
+            int sum=0;
+            statement.setString(1, game);
+            try(var rates = statement.executeQuery()) {
+                var ratings = new ArrayList<Rating>();
+                while (rates.next()) {
+                    ratings.add(new Rating(rates.getString(1), rates.getString(2), rates.getInt(3), rates.getTimestamp(4)));
+                    sum += rates.getInt(3);
+                }
+                return sum/ratings.size();
+            }
+        }
+        catch (SQLException e) {
+            throw new GameStudioException(e);
+        }
+    }
+
+    @Override
+    public int getRating(String game, String player) {
+
+        try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            var statement = connection.prepareStatement(SELECT_STATEMENT)
+        ){
+            statement.setString(1, game);
+            statement.setString(2, player);
+            try(var getRate = statement.executeQuery()){
+                var rate = new Rating(getRate.getString(1), getRate.getString(2), getRate.getInt(3), getRate.getTimestamp(4));
+                return rate.getRating();
             }
         }
         catch (SQLException e) {

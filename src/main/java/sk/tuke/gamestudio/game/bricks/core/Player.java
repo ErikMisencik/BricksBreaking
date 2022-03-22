@@ -2,7 +2,7 @@ package sk.tuke.gamestudio.game.bricks.core;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private int lives;
     private int score;
 

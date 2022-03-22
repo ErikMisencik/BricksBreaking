@@ -20,23 +20,26 @@ public class TestJDBC {
 
         scoreService.addScore(new Score("Marek", "BricksBreaking", 2000, new Date()));
         scoreService.addScore(new Score("Erik", "Lolecko", 3647, new Date()));
-        scoreService.addScore(new Score("Bedo", "Cancer", 2000, new Date()));
-        scoreService.addScore(new Score("Jan", "BricksBreaking", 222, new Date()));
 
         commentService.addComment(new Comment("Bedo", "Cancer", "Lolecko milujem", new Date()));
         commentService.addComment(new Comment("Bedo", "Cancer", "Fakt toto su tlaky", new Date()));
 
-        ratingService.addRating(new Rating("Jan", "BricksBreaking", 5, new Date()));
-        ratingService.addRating(new Rating("Dano", "BricksBreaking", 2, new Date()));
+        ratingService.setRating(new Rating("Jan", "BricksBreaking", 5, new Date()));
+        ratingService.setRating(new Rating("Dano", "BricksBreaking", 5, new Date()));
+        ratingService.setRating(new Rating("Dano", "BricksBreaking", 1, new Date()));
+        ratingService.setRating(new Rating("Dano", "BricksBreaking", 1, new Date()));
 
         var scores = scoreService.getTopScores("BricksBreaking");
         System.out.println(scores);
 
-        var comments = commentService.getCommentFrom("Bedo");
+        var comments = commentService.getCommentFromPlayer("Bedo");
         System.out.println(comments);
 
         var ratings = ratingService.getTopRating("BricksBreaking");
         System.out.println(ratings);
+
+        var average = ratingService.getAverageRating("BricksBreaking");
+        System.out.println(average);
 
     }
 }

@@ -7,9 +7,6 @@ public enum TileColor {
     YELLOW(2),
     BLUE(3);
 
-    private int number;
-
     TileColor(int number) {
-        this.number = number;
     }
 }

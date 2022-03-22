@@ -21,11 +21,13 @@ public class Field {
         generate();
     }
 
+    //GENERATION OF FIELD
     public void generate() {
         fill();
         fillWithColors();
     }
 
+    //FOR NOT HAVING TILES OF STATUS NULL
     private void fill(){
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
@@ -34,6 +36,7 @@ public class Field {
         }
     }
 
+    //SETTING TILES RANDOM COLOR FROM TILECOLOR
     private void fillWithColors() {
         Random random = new Random();
 
@@ -55,6 +58,7 @@ public class Field {
         }
     }
 
+    //RESET OF FIELD
     public void resetField() {
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
@@ -65,22 +69,23 @@ public class Field {
         setRemovedTilesCount(0);
     }
 
+    //REMOVING OF TILES FROM FIELD
     public  int removeTiles(int row, int column){
 
-        //nutne podmienky
+        //NEEDED CONDITIONS
         if(row <0 || column < 0 || row >= getRowCount() || column >= getColumnCount()){
             return 0;
         }
-
         if(getTile(row,column).getColor() != color){
             return 0;
         }
 
-        // najdenie komponentu a zadanie jeho farby na 0, kvazi po odkliknuti
+        // SETTING STATUS OF NONE TO COMPOTENT(MORE TILES WITH 1 COLOR TOGETHER)
+        // CANT BE SEEN IN UI
         tiles[row][column].setColor(TileColor.NONE);
         removedTiles = 1;   //removedBricks
 
-        //prehliadavanie
+        //ALOGORITHM FOR FINDING A COMPONENT
 
         for (int r = row - 1; r <= row + 1; r++)
             for (int c = column - 1; c <= column + 1; c++)
@@ -89,19 +94,32 @@ public class Field {
        return removedTiles;
     }
 
+    //CHOOSEN TILE BY PLAYER
     public void chooseTile(int row, int column, Player player){
                 if(getTile(row,column).getColor() != TileColor.NONE) {
-                    color = getTile(row,column).getColor();           //urcime si vybranu farbu
+                    //GETTING COLOR OF CHOSEN TILE
+                    color = getTile(row,column).getColor();
                     removedTilesCount += removeTiles(row, column);
+                    //REMOVING HP IF WAS ONLY 1 TILE IN 1 COMPONENT
                     if(removedTiles == 1){
                         int playerLives = player.getLives();
                         playerLives --;
                         player.setLives(playerLives);
                     }
-                    player.setScore((removedTilesCount*130)); // urob nejake rozne hodnoty
+                    //SETTING SCORE FOR PLAYER
+                    playerScore(player);
                 }
     }
 
+    //CALCULATING SCORE
+    private void playerScore(Player player){
+        int score = player.getScore();
+        score = score + removedTiles*87;
+        player.setScore(score);
+    }
+
+    //ALGORTIHM FOR TILES IN THE AIR
+    //CORRECTIONS OF TILES IN FIELD AFTER REMOVING TILES
     public void fieldCorrection() {
         int i = 10;
         while (i != 0) {
@@ -118,10 +136,10 @@ public class Field {
         }
     }
 
+    //CORRECTIONS OF TILES IF COLUMS WAS EMPY
     private void columnsCorrection(int row, int column){
-
+        //LEFT SIDE CORRECTION
         if(column < (columnCount/2)) {
-            //zarovnavanie podla lavej strany
             for (int r = row; r >= 0; r--) {                     //r = 4
                 for (int c = column; c > 0; c--) {              //c = 3
                     if (getTile(r, c).getColor() == TileColor.NONE && getTile(r, c - 1).getColor() != TileColor.NONE) {
@@ -132,8 +150,8 @@ public class Field {
                 }
             }
         }
+        //RIGHT SIDE CORRECTION
         else {
-            //zarovnavanie podla pravej strany
             for (int r = row; r >= 0; r--) {
                 for (int c = column; c < columnCount-1; c++) {
                     if (getTile(r, c).getColor() == TileColor.NONE && getTile(r, c + 1).getColor() != TileColor.NONE) {
@@ -146,6 +164,7 @@ public class Field {
         }
     }
 
+    //CHECK IF THERE ARE EMPTY COLUMS
     public void checkColumns(){
         int x = 10;
         while (x != 0) {
@@ -165,13 +184,12 @@ public class Field {
 
     }
 
+    //GAME STATE IF SOLVED
     public boolean isSolved() {
         return rowCount * columnCount == removedTilesCount;
     }
 
-
     //GETTERS AND SETTERS
-
 
     public int getColumnCount() {
         return columnCount;

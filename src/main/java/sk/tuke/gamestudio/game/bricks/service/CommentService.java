@@ -8,7 +8,9 @@ public interface CommentService {
 
     void addComment(Comment comment);
 
-    List<Comment> getCommentFrom(String player);
+    List<Comment> getCommentFromPlayer(String player);
+
+    List<Comment> getComments(String game);
 
     void reset();
 }

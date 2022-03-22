@@ -34,11 +34,30 @@ public class CommentServiceJDBC implements CommentService{
     }
 
     @Override
-    public List<Comment> getCommentFrom(String player) {
+    public List<Comment> getCommentFromPlayer(String player) {
         try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
             var statement = connection.prepareStatement(SELECT_STATEMENT)
         ){
             statement.setString(1, player);
+            try(var rs = statement.executeQuery()){
+                var comments = new ArrayList<Comment>();
+                while (rs.next()){
+                    comments.add(new Comment(rs.getString(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4)));
+                }
+                return comments;
+            }
+        }
+        catch (SQLException e) {
+            throw new GameStudioException(e);
+        }
+    }
+
+    @Override
+    public List<Comment> getComments(String game) {
+        try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            var statement = connection.prepareStatement(SELECT_STATEMENT)
+        ){
+            statement.setString(1, game);
             try(var rs = statement.executeQuery()){
                 var comments = new ArrayList<Comment>();
                 while (rs.next()){

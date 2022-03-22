@@ -38,9 +38,9 @@ public class ConsoleUI {
         this.field = field;
     }
 
+    //VISUALIZATION OF GAME, ITERACTIVE SIDE OF GAME, CONSOLE UI
     public void play() {
-            //sprav, že do you wanna reset ScoreBoard ? pomocou  service.reset();
-            //bud sprav reset na zaciatku alebo sa opytaj na konci hry
+
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
         player = new Player(playerName,5, 0);
@@ -51,38 +51,43 @@ public class ConsoleUI {
             printField();
             processInput();
 
-            //Repeat new Field
+            //Create new Field if its solved
             if(field.isSolved()){
-
-                    //pridať možnosť hračovy ci chce pokračovať dalej
-                System.out.print("Do you wanna play again Y/N: ");
-                String line = scanner.nextLine().toUpperCase();
-                System.out.print("\n");
-                if ("N".equals(line)) {
-                    field.setState(GameState.WON);
+                if(player.getLives()>0) {
+                    System.out.print("Do you wanna play again Y/N: ");
+                    String line = scanner.nextLine().toUpperCase();
+                    System.out.print("\n");
+                    if("Y".equals(line) || "Z".equals(line) ){
+                        field.resetField();
+                        field.generate();
+                    }
+                    else {
+                        field.setState(GameState.WON);
+                    }
                 }
-
-                    field.resetField();
-                    field.generate();
-
+                //ADD
+                //if solved but with 0 lives, player can get 1 life from developer
+                //to try get more points, maybe can add
             }
+            //IF 0 LIVES - Lost game
                 if(player.getLives()==0){
                     field.setState(GameState.FAILED);
                 }
-            field.fieldCorrection();    // pridany check skontrolovat funkcionalitu
-            field.checkColumns();       // uprava stlpcov prazdnych
-            field.fieldCorrection();    // po uprave stlpcov ešte jedna uprava poľa
-
+            field.fieldCorrection();    // Check for correction of tiles position
+            field.checkColumns();       // Check for empty colums
+            field.fieldCorrection();    // Check for correction of tiles position
         } while (field.getState() == GameState.PLAYING);
 
         printPlayerStats();
 
+        //GameState and his print
         if (field.getState() == GameState.FAILED) {
             System.out.println("\nGame Failed!");
         } else {
             System.out.println("\nGame Won!");
         }
 
+        //OPTIONAL COMMENTnRATE OF GAME
 
         System.out.print("\nDo you wanna Rate and Comment The Game Y/N: ");
         String line = scanner.nextLine().toUpperCase();
@@ -100,8 +105,11 @@ public class ConsoleUI {
 
         scoreService.addScore(new Score(player.getName(),"BricksBreaking", player.getScore(), new Date()));
         printTopScores();
+        //ADD
+        //do you wanna reset ScoreBoard ? with service.reset();
     }
 
+    //PLAYER STATS PRINT
     private void printPlayerStats(){
         System.out.print("Player Name:   ");
         System.out.println(player.getName());
@@ -112,6 +120,7 @@ public class ConsoleUI {
 
     }
 
+    //ALGORITHM PRINTING FIELD
     private void printField() {
         System.out.print(" ");
         for (int column = 0; column < field.getColumnCount(); column++) {
@@ -125,8 +134,9 @@ public class ConsoleUI {
             for (int column = 0; column < field.getColumnCount(); column++) {
                 Tile tile = field.getTile(row, column);
                 System.out.print(" ");
+                //SETTING TILES MARKER AND COLOR OF MARKER
                 switch (tile.getColor()) {
-                    case NONE ->  System.out.print(ANSI_GREEN +'X'+ ANSI_RESET);
+                    case NONE ->  System.out.print(ANSI_GREEN +' '+ ANSI_RESET);
                     case RED ->  System.out.print(ANSI_RED + 'R'+ ANSI_RESET);
                     case YELLOW ->   System.out.print(ANSI_YELLOW + 'Y' + ANSI_RESET);
                     case BLUE ->  System.out.print(ANSI_BLUE +'B'+ ANSI_RESET);
@@ -136,7 +146,9 @@ public class ConsoleUI {
         }
     }
 
+    //INPUT FOR CHOOSING TILE
     private void processInput () {
+            //CHOSSING OF TILE IN GAME
             System.out.print("Enter command (X - exit, 11 - Choose Tile): ");
             String line = scanner.nextLine().toUpperCase();
             if ("X".equals(line)) {
@@ -152,6 +164,7 @@ public class ConsoleUI {
             }
         }
 
+    //TABLE OF TOPSCORES
     private void printTopScores(){
         System.out.print("\nHall Of Fame 5: \n");
         var scores = scoreService.getTopScores("BricksBreaking");
@@ -161,19 +174,21 @@ public class ConsoleUI {
         }
     }
 
+    //RATE OF THE GAME
     private void ratingGame() {
         System.out.print("Enter Rating Of The Game (1-5): ");
         String rating = scanner.nextLine();
         Matcher rate = RATING_PATTERN.matcher(rating);
         if (rate.matches()) {
             int number = Integer.parseInt(rate.group(1));
-            ratingService.addRating(new Rating(player.getName(), "BricksBreaking", number, new Date()));
+            ratingService.setRating(new Rating(player.getName(), "BricksBreaking", number, new Date()));
         } else {
             System.err.print("Wrong input - Try Again: ");
             ratingGame();
         }
     }
 
+    //COMMENT OF THE GAME
     private void commentGame(){
         System.out.print("Write Comment About The Game: ");
         String comment = scanner.nextLine();

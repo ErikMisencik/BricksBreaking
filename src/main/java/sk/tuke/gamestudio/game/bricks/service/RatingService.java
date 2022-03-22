@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface RatingService {
 
-    void addRating(Rating rating);
+    void setRating(Rating rating);
 
     List<Rating> getTopRating(String game);
+
+    int getAverageRating(String game);
+
+    int getRating(String game, String player);
 
     void reset();
 }

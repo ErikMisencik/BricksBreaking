@@ -1,8 +1,12 @@
 package sk.tuke.gamestudio.game.bricks.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Score {
+public class Score implements Serializable {
+    //transformacia objektoveho grafu na postupnost bajtov
+    //pyta si suhlas ci sa moze ulozit
+    //nema ziadne metody
 
     private String player;
 

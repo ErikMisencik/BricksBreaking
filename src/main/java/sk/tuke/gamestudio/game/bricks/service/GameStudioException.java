@@ -8,6 +8,7 @@ public class GameStudioException extends RuntimeException{
     public GameStudioException(String message) {
         super(message);
     }
+
     public GameStudioException(Throwable cause) {
         super(cause);
     }

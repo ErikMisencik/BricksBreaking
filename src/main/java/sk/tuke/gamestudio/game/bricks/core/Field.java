@@ -1,8 +1,11 @@
 package sk.tuke.gamestudio.game.bricks.core;
 
+import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
+
+import java.io.*;
 import java.util.Random;
 
-public class Field {
+public class Field implements Serializable {
 
     public GameState state = GameState.PLAYING;
     private final int rowCount;
@@ -11,7 +14,7 @@ public class Field {
     private TileColor color;
     private int removedTilesCount;
     private int removedTiles;
-
+    private static final String FIELD_FILE = "field.bin";
 
     public Field(int rowCount, int columnCount) {
 
@@ -118,7 +121,7 @@ public class Field {
         player.setScore(score);
     }
 
-    //ALGORTIHM FOR TILES IN THE AIR
+    //ALGORITHM FOR TILES IN THE AIR
     //CORRECTIONS OF TILES IN FIELD AFTER REMOVING TILES
     public void fieldCorrection() {
         int i = 10;
@@ -188,6 +191,23 @@ public class Field {
     public boolean isSolved() {
         return rowCount * columnCount == removedTilesCount;
     }
+
+    //SAVE AND LOAD GAME
+    public static Field load() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FIELD_FILE))) {
+            return (Field) ois.readObject();
+        } catch (Exception e) {
+            throw new GameStudioException("Error loading field", e);
+        }
+    }
+    public void save() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FIELD_FILE))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            throw new GameStudioException("Error saving field", e);
+        }
+    }
+
 
     //GETTERS AND SETTERS
 

@@ -8,9 +8,9 @@ import sk.tuke.gamestudio.game.bricks.service.*;
 import java.util.Date;
 
 public class TestJDBC {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
 
-        ScoreService scoreService = new ScoreServiceJDBC();
+        ScoreService scoreService = new ScoreServiceFile();
         CommentService commentService = new CommentServiceJDBC();
         RatingService ratingService = new RatingServiceJDBC();
 

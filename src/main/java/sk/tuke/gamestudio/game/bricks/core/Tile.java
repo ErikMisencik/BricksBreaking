@@ -1,6 +1,8 @@
 package sk.tuke.gamestudio.game.bricks.core;
 
-public class Tile {
+import java.io.Serializable;
+
+public class Tile implements Serializable {
 
     private TileColor color = TileColor.NONE;
 

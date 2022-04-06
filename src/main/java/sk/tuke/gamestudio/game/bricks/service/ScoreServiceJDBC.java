@@ -29,7 +29,7 @@ public class ScoreServiceJDBC implements ScoreService{
             statement.setTimestamp(4, new Timestamp(score.getPlayedAt().getTime()));
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new GameStudioException(e);
+            throw new GameStudioException("Problem inserting score",e);
         }
     }
 
@@ -37,21 +37,19 @@ public class ScoreServiceJDBC implements ScoreService{
     public List<Score> getTopScores(String game) {
         try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
             var statement = connection.prepareStatement(SELECT_STATEMENT)
-        ){
+        ) {
             statement.setString(1, game);
-            try(var rs = statement.executeQuery()){
+            try (var rs = statement.executeQuery()) {
                 var scores = new ArrayList<Score>();
-                while (rs.next()){
+                while (rs.next()) {
                     scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
                 }
                 return scores;
             }
-
-            //statement.executeUpdate("INSERT INTO score (player, game, points, played_at) VALUES ('Erik', 'BricksBreaking', 2200,'2022-03-14 22:59')");
         }
         catch (SQLException e) {
-            throw new GameStudioException(e);
-        }
+                throw new GameStudioException("Problem selecting score", e);
+            }
     }
 
     @Override
@@ -61,7 +59,7 @@ public class ScoreServiceJDBC implements ScoreService{
         ){
             statement.executeUpdate(DELETE_STATEMENT);
         } catch (SQLException e) {
-            throw new GameStudioException(e);
+            throw new GameStudioException("Problem deleting score", e);
         }
     }
 }

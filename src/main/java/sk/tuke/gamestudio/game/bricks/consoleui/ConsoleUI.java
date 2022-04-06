@@ -152,6 +152,7 @@ public class ConsoleUI {
             System.out.print("Enter command (X - exit, 11 - Choose Tile): ");
             String line = scanner.nextLine().toUpperCase();
             if ("X".equals(line)) {
+                field.save();
                 System.exit(0);
             }
             Matcher matcher = COMMAND_PATTERN.matcher(line);

@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.score;
 
 import sk.tuke.gamestudio.game.bricks.entity.Score;
 

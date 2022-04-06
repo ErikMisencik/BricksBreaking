@@ -3,7 +3,12 @@ package sk.tuke.gamestudio.game.bricks;
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
 import sk.tuke.gamestudio.game.bricks.entity.Rating;
 import sk.tuke.gamestudio.game.bricks.entity.Score;
-import sk.tuke.gamestudio.game.bricks.service.*;
+import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
+import sk.tuke.gamestudio.game.bricks.service.comment.CommentServiceJDBC;
+import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;
+import sk.tuke.gamestudio.game.bricks.service.rating.RatingServiceJDBC;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceFile;
 
 import java.util.Date;
 

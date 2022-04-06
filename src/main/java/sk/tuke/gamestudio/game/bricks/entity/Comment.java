@@ -1,8 +1,17 @@
 package sk.tuke.gamestudio.game.bricks.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
+@Entity
+public class Comment implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private int key;
 
     private String player;
 
@@ -17,6 +26,10 @@ public class Comment {
         this.game = game;
         this.comment = comment;
         this.writtenAt = writtenAt;
+    }
+
+    public Comment() {
+
     }
 
     //GETERS AND SETTERS
@@ -61,5 +74,13 @@ public class Comment {
                 ", comment='" + comment + '\'' +
                 ", writtenAt=" + writtenAt +
                 '}';
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 }

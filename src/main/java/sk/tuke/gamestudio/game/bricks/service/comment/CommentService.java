@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.comment;
 
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
 

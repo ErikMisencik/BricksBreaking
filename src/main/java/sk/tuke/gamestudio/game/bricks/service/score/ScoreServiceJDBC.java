@@ -1,6 +1,8 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.score;
 
 import sk.tuke.gamestudio.game.bricks.entity.Score;
+import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreServiceJDBC implements ScoreService{
+public class ScoreServiceJDBC implements ScoreService {
 
 
     public static final String JDBC_URL = "jdbc:postgresql://localhost:5432/gamestudio";

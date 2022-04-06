@@ -1,12 +1,20 @@
 package sk.tuke.gamestudio.game.bricks.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
 public class Score implements Serializable {
     //transformacia objektoveho grafu na postupnost bajtov
     //pyta si suhlas ci sa moze ulozit
     //nema ziadne metody
+
+    @Id
+    @GeneratedValue
+    private int key;
 
     private String player;
 
@@ -15,6 +23,9 @@ public class Score implements Serializable {
     private int points;
 
     private Date playedAt;  //cislo, okamih v historii
+
+    public Score() {
+    }
 
     public Score(String player, String game, int points, Date playedAt) {
         this.player = player;
@@ -63,5 +74,13 @@ public class Score implements Serializable {
                 ", points=" + points +
                 ", playedAt=" + playedAt +
                 '}';
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 }

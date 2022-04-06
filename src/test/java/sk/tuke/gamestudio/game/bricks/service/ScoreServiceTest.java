@@ -2,6 +2,8 @@ package sk.tuke.gamestudio.game.bricks.service;
 
 import org.junit.Test;
 import sk.tuke.gamestudio.game.bricks.entity.Score;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceJDBC;
 
 import java.util.Date;
 import java.util.List;

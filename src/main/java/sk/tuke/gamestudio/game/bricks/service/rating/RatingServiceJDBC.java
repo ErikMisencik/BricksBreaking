@@ -1,6 +1,8 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.rating;
 
 import sk.tuke.gamestudio.game.bricks.entity.Rating;
+import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
+import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

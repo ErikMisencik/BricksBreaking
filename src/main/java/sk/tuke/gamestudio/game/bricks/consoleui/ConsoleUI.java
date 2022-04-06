@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.game.bricks.consoleui;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import sk.tuke.gamestudio.game.bricks.core.Field;
 import sk.tuke.gamestudio.game.bricks.core.GameState;
 import sk.tuke.gamestudio.game.bricks.core.Player;
@@ -7,7 +8,9 @@ import sk.tuke.gamestudio.game.bricks.core.Tile;
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
 import sk.tuke.gamestudio.game.bricks.entity.Rating;
 import sk.tuke.gamestudio.game.bricks.entity.Score;
-import sk.tuke.gamestudio.game.bricks.service.*;
+import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
+import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -29,9 +32,13 @@ public class ConsoleUI {
     private Player player;
 
     private final Scanner scanner = new Scanner(System.in);
-    private final ScoreService scoreService = new ScoreServiceJDBC();
-    private final RatingService ratingService = new RatingServiceJDBC();
-    private final CommentService commentService = new CommentServiceJDBC();
+
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private RatingService ratingService;
+    @Autowired
+    private CommentService commentService;
 
 
     public ConsoleUI(Field field) {

@@ -1,13 +1,15 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.score;
 
 import sk.tuke.gamestudio.game.bricks.entity.Score;
+import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScoreServiceFile implements ScoreService{
+public class ScoreServiceFile implements ScoreService {
     private static final String SCORE_FILE = "score.bin";   //File
 
     private List<Score> scores = new ArrayList<>();

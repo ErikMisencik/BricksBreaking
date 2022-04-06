@@ -1,6 +1,8 @@
-package sk.tuke.gamestudio.game.bricks.service;
+package sk.tuke.gamestudio.game.bricks.service.comment;
 
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
+import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
+import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentServiceJDBC implements CommentService{
+public class CommentServiceJDBC implements CommentService {
 
     public static final String JDBC_URL = "jdbc:postgresql://localhost:5432/gamestudio";
     public static final String JDBC_USER = "postgres";

@@ -1,8 +1,17 @@
 package sk.tuke.gamestudio.game.bricks.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Rating {
+@Entity
+public class Rating implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private int key;
 
     private String player;
 
@@ -17,6 +26,10 @@ public class Rating {
         this.game = game;
         this.rating = rating;
         this.ratedAt = ratedAt;
+    }
+
+    public Rating() {
+
     }
 
     //GETTERS AND SETTERS
@@ -61,5 +74,13 @@ public class Rating {
                 ", rating=" + rating +
                 ", ratedAt=" + ratedAt +
                 '}';
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 }

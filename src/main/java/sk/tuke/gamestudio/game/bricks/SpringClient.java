@@ -2,9 +2,14 @@ package sk.tuke.gamestudio.game.bricks;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.bricks.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.bricks.core.Field;
 import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
@@ -13,14 +18,20 @@ import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;
 import sk.tuke.gamestudio.game.bricks.service.rating.RatingServiceJPA;
 import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
 import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceJPA;
+import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceRestClient;
 
 @SpringBootApplication
 @Configuration
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = "sk.tuke.gamestudio.game.bricks.server.*"))
+//nebude scanovat balik server
+
 public class SpringClient {
 
     public static void main(String[] args) {
-        //kde ma hladat komponenty
-        SpringApplication.run(SpringClient.class);
+
+        //nech spring nespusta web
+        new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
 
     @Bean
@@ -39,18 +50,22 @@ public class SpringClient {
     }
 
     @Bean   //oznacenie pre score
-    public ScoreService scoreService(){
-        return new ScoreServiceJPA();
-    }
+    public ScoreService scoreService(){return new ScoreServiceRestClient();}
+
     @Bean   //oznacenie pre komponent
     public CommentService commentService(){
         return new CommentServiceJPA();
     }
+
     @Bean   //oznacenie pre rating
     public RatingService ratingService(){
         return new RatingServiceJPA();
     }
 
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
 
 }

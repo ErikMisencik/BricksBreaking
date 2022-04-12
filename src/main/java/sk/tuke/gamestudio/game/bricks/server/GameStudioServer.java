@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import sk.tuke.gamestudio.game.bricks.SpringClient;
 import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
 import sk.tuke.gamestudio.game.bricks.service.comment.CommentServiceJPA;
 import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;

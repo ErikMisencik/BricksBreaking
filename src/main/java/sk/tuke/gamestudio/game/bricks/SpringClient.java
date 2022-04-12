@@ -52,8 +52,9 @@ public class SpringClient {
 
     @Bean   //oznacenie pre score
     public ScoreService scoreService(){
-        //return new ScoreServiceJPA();
-        return new ScoreServiceRestClient();}
+       // return new ScoreServiceJPA();
+        return new ScoreServiceRestClient();
+        }
 
     @Bean   //oznacenie pre komponent
     public CommentService commentService(){

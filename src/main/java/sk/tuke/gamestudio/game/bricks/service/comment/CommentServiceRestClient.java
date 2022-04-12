@@ -3,8 +3,6 @@ package sk.tuke.gamestudio.game.bricks.service.comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
-import sk.tuke.gamestudio.game.bricks.entity.Rating;
-import sk.tuke.gamestudio.game.bricks.entity.Score;
 
 import java.util.Arrays;
 import java.util.List;

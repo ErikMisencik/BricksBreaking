@@ -17,7 +17,6 @@ public class ScoreServiceRestClient implements ScoreService{
     @Override
     public void addScore(Score score) {
         restTemplate.postForEntity(url + "/score", score, Score.class);
-
     }
 
     @Override

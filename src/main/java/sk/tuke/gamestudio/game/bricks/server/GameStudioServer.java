@@ -29,7 +29,7 @@ public class GameStudioServer {
     public ScoreService scoreService(){
         return new ScoreServiceJPA();
     }
-    @Bean   //oznacenie pre komponent
+    @Bean   //oznacenie pre komponent comment
     public CommentService commentService(){
         return new CommentServiceJPA();
     }

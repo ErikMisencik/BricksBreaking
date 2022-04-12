@@ -2,7 +2,6 @@ package sk.tuke.gamestudio.game.bricks.service.rating;
 
 import sk.tuke.gamestudio.game.bricks.entity.Rating;
 import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
-import sk.tuke.gamestudio.game.bricks.service.rating.RatingService;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -76,23 +75,23 @@ public class RatingServiceJDBC implements RatingService {
         }
     }
 
-    @Override
-    public int getRating(String game, String player) {
-
-        try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-            var statement = connection.prepareStatement(SELECT_STATEMENT)
-        ){
-            statement.setString(1, game);
-            statement.setString(2, player);
-            try(var getRate = statement.executeQuery()){
-                var rate = new Rating(getRate.getString(1), getRate.getString(2), getRate.getInt(3), getRate.getTimestamp(4));
-                return rate.getRating();
-            }
-        }
-        catch (SQLException e) {
-            throw new GameStudioException(e);
-        }
-    }
+//    @Override
+//    public int getRating(String game, String player) {
+//
+//        try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+//            var statement = connection.prepareStatement(SELECT_STATEMENT)
+//        ){
+//            statement.setString(1, game);
+//            statement.setString(2, player);
+//            try(var getRate = statement.executeQuery()){
+//                var rate = new Rating(getRate.getString(1), getRate.getString(2), getRate.getInt(3), getRate.getTimestamp(4));
+//                return rate.getRating();
+//            }
+//        }
+//        catch (SQLException e) {
+//            throw new GameStudioException(e);
+//        }
+//    }
 
     @Override
     public void reset() {

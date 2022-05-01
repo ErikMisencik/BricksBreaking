@@ -30,7 +30,6 @@ import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceRestClient;
 public class SpringClient {
 
     public static void main(String[] args) {
-
         //nech spring nespusta web
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }

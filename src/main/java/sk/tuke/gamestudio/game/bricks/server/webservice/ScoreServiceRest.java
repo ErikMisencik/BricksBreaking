@@ -6,6 +6,7 @@ import sk.tuke.gamestudio.game.bricks.entity.Score;
 import sk.tuke.gamestudio.game.bricks.service.score.ScoreService;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/score")   //zmenit potom url veci podla mna
 

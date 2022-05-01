@@ -3,7 +3,6 @@ package sk.tuke.gamestudio.game.bricks.server.webservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sk.tuke.gamestudio.game.bricks.entity.Comment;
-import sk.tuke.gamestudio.game.bricks.entity.Score;
 import sk.tuke.gamestudio.game.bricks.service.comment.CommentService;
 
 import java.util.List;

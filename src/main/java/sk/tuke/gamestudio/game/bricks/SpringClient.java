@@ -1,6 +1,7 @@
 package sk.tuke.gamestudio.game.bricks;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -32,6 +33,7 @@ public class SpringClient {
     public static void main(String[] args) {
         //nech spring nespusta web
         new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
+     //  SpringApplication.run(SpringClient.class);
     }
 
     @Bean

@@ -17,7 +17,7 @@ import sk.tuke.gamestudio.game.bricks.service.score.ScoreServiceJPA;
 @SpringBootApplication
 @Configuration
 @EntityScan(basePackages = "sk.tuke.gamestudio.game.bricks.entity")
-@ComponentScan(basePackages = "sk.tuke.gamestudio.game.bricks.server.webservice")
+//@ComponentScan(basePackages = "sk.tuke.gamestudio.game.bricks.server.webservice")
 
 public class GameStudioServer {
     public static void main(String[] args) {

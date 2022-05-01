@@ -32,7 +32,7 @@ public class RatingServiceRestClient implements RatingService{
     @Override
     public int getAverageRating(String game) {
         try{
-            return restTemplate.getForEntity(url + "/rating/" + game, Integer.class).getBody();
+            return restTemplate.getForEntity(url + "/rating/" + game + "/AVG", Integer.class).getBody();
         }
         catch (Exception e) {
             throw new UnsupportedOperationException("NULL");

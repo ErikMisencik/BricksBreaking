@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+</head>
+<body>
+
+<h1>Bricks Breaking</h1>
+
+<a href="/bricks/new">New game</a><br>
+
+<span th:utext="${@bricksController.htmlField}"></span><br>
+
+<img th:src="@{/bricks/red.png}" alt=""/>
+
+
+</body>
+</html>

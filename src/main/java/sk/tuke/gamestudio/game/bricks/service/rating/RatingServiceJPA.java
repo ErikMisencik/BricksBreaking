@@ -14,8 +14,9 @@ public class RatingServiceJPA implements RatingService{
     private EntityManager entityManager;
 
     @Override
-    public void setRating(Rating rating) {
+    public Object setRating(Rating rating) {
         entityManager.persist(rating);
+        return null;
     }
 
     @Override
@@ -29,13 +30,13 @@ public class RatingServiceJPA implements RatingService{
     public int getAverageRating(String game) {
         return (int)Math.round((Double)this.entityManager.createQuery("SELECT AVG(r.rating) FROM Rating r WHERE r.game =: game").setParameter("game", game).getSingleResult());}
 
-//    @Override
-//    public int getRating(String game, String player) {
-//        return entityManager.createQuery("select r from Rating r where r.game = :game AND r.player = :player order by r.rating desc")
-//                .setParameter("game", game)
-//                .setParameter("player", player)
-//                .getFirstResult();
-//    }
+    @Override
+    public int getRating(String game, String player) {
+        return entityManager.createQuery("select r from Rating r where r.game = :game AND r.player = :player order by r.rating desc")
+                .setParameter("game", game)
+                .setParameter("player", player)
+                .getFirstResult();
+    }
 
     @Override
     public void reset() {

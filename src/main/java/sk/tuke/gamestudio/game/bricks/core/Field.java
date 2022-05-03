@@ -40,7 +40,7 @@ public class Field implements Serializable {
     }
 
     //SETTING TILES RANDOM COLOR FROM TILECOLOR
-    private void fillWithColors() {
+    public void fillWithColors() {
         Random random = new Random();
 
         for (int row = 0; row < rowCount; row++) {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+</head>
+
+<h1>Do you wanna play again?</h1>
+<br>
+<h2>Write yes/no</h2>
+
+<br>
+    <span th:if="${@gameController.answer}">
+        <a href="/answer/new">Please Try Again</a><br>
+    </span>
+<br>
+
+    <form action="/answer" method="post">
+        Answer: <input type="text" name="answer"/><br/>
+        <input type="submit"/>
+    </form>
+
+
+
+</html>

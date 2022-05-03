@@ -3,11 +3,7 @@ package sk.tuke.gamestudio.game.bricks.service.rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.gamestudio.game.bricks.entity.Rating;
-import sk.tuke.gamestudio.game.bricks.service.GameStudioException;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +16,9 @@ public class RatingServiceRestClient implements RatingService{
     private RestTemplate restTemplate;
 
     @Override
-    public void setRating(Rating rating) {
+    public Object setRating(Rating rating) {
         restTemplate.postForEntity(url + "/rating", rating, Rating.class);
+        return null;
     }
 
     @Override
@@ -38,6 +35,12 @@ public class RatingServiceRestClient implements RatingService{
             throw new UnsupportedOperationException("NULL");
         }
     }
+
+    @Override
+    public int getRating(String game, String player) {
+        return 0;
+    }
+
     @Override
     public void reset() {
         throw new UnsupportedOperationException("Not supported via web service");

@@ -2,7 +2,7 @@ package sk.tuke.gamestudio.game.bricks.core;
 
 public class Player {
 
-    private final String name;
+    private String name;
     private int lives;
     private int score;
 
@@ -17,6 +17,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getLives() {
@@ -34,4 +38,5 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+
 }

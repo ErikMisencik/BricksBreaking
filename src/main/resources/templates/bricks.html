@@ -5,16 +5,67 @@
     <title>Gamestudio</title>
     <link rel="stylesheet" href="/css/stylesheet.css"/>
 </head>
-<body>
+    <body>
+    <div class = 'zaklad'>
 
-<h1>Bricks Breaking</h1>
+            <h1>Bricks Breaking</h1><br>
+            <h2><a href="/bricks/new">New game</a><br><br></h2>
 
-<a href="/bricks/new">New game</a><br>
+        <div class='child'>
+            <div class='pole'>
+                <span th:utext="${@bricksController.htmlField}"></span>
+            </div>
+        </div>
+        <div class='child2'>
+            <div class= 'buttons'>
+                <form th:action="@{/rating}">
+                    <buttons>
+                        <button type="submit" th:name="action" th:value="in">Show Ratings</button>
+                    </buttons>
+                </form>
+                <form th:action="@{/comments}">
+                    <buttons>
+                        <button type="submit" th:name="action" th:value="in">Show Comments</button>
+                    </buttons>
+                </form>
+            </div>
+        </div>
+         <br>
 
-<span th:utext="${@bricksController.htmlField}"></span><br>
+        <div class='child'>
+            <span th:if="${@bricksController.logged}">
+                <h2>Logged as  <span th:text="${@bricksController.loggedUser.login}"/></h2><br/>
+            </span>
+        </div>
+        <br>
+        <div class='child2'>
 
-<img th:src="@{/bricks/red.png}" alt=""/>
+            <h2> <a href="/logout">Click here to Logout</a></h2><br/>
+        </div>
+            <br>
 
 
-</body>
+
+            <div>
+                <pl>Player Lives:  <span th:text="${player.lives}"/></pl><br>
+                <ps>Player Score: <span th:text="${player.score}"/></ps> <br>
+                <rtc>Removed Tiles Count :<span th:text="${field.removedTilesCount}"/> </rtc> <br>
+            </div>
+
+
+        <div class= 'ciselka'>
+            Scores
+            <ol>
+                <li th:each="score : ${scores}" >
+                    <span th:text="${score.player}"/>
+                    <span th:text="${score.points}"/>
+                </li>
+            </ol>
+        </div>
+
+
+    </div>
+    </body>
+
+
 </html>

@@ -51,6 +51,7 @@ public class ConsoleUI {
         System.out.print("Enter Player Name: ");
         String playerName = scanner.nextLine();
         player = new Player(playerName,5, 0);
+
         do {
             printPlayerStats();
             System.out.print("Removed Tiles: ");

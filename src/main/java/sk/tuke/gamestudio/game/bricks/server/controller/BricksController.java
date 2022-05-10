@@ -77,7 +77,7 @@ public class BricksController {
         return "comments";
     }
     public String showRating(Model model){                     //xxxxxxxx
-        model.addAttribute("rating", ratingService.getRating("BricksBreaking", this.login));
+        model.addAttribute("rating", ratingService.getTopRating("BricksBreaking"));
         return "rating";
     }
 

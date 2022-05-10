@@ -12,7 +12,7 @@ public interface RatingService {
 
     int getAverageRating(String game);
 
-   int getRating(String game, String player);
+    int getRating(String game, String player);
 
     void reset();
 }

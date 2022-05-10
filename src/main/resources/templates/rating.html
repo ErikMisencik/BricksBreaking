@@ -11,12 +11,14 @@
         Ratings:
     </div>
     <div class= 'komentare'>
+
         <ol>
             <li th:each="rating : ${rating}" >
                 <span th:text="${rating.player}"/>
                 <span th:text="${rating.rating}"/>
             </li>
         </ol>
+        
     </div>
 
 
